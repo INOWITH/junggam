@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>정감호텔 AR 쿠폰</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ar.js@3.3.2/aframe/build/aframe-ar.min.js"></script>
+    <style>
+      #couponButton {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 12px 24px;
+        font-size: 18px;
+        background-color: #ffcc00;
+        border: none;
+        border-radius: 8px;
+        display: none;
+        cursor: pointer;
+      }
+      #couponImage {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 80%;
+        display: none;
+        border: 3px solid #333;
+        border-radius: 12px;
+      }
+    </style>
+  </head>
+  <body style="margin: 0; overflow: hidden;">
+    <a-scene embedded arjs>
+      <a-assets>
+        <img id="ticket" src="ticket.png">
+      </a-assets>
+
+      <a-image src="#ticket" position="0 1.5 -3" width="1.5" height="0.75" id="ticketEntity">
+        <a-animation attribute="position"
+                     from="0 1.5 -3"
+                     to="0 0.5 -3"
+                     dur="3000"
+                     easing="ease-out"
+                     fill="forwards"
+                     begin="startAnim"></a-animation>
+      </a-image>
+    </a-scene>
+
+    <button id="couponButton" onclick="showCoupon()">쿠폰 받기</button>
+    <img id="couponImage" src="coupon.png" alt="쿠폰 이미지">
+
+    <script>
+      window.onload = () => {
+        // 티켓 애니메이션 시작
+        document.querySelector('#ticketEntity').emit('startAnim');
+
+        // 애니메이션 끝나고 버튼 보이게
+        setTimeout(() => {
+          document.getElementById('couponButton').style.display = 'block';
+        }, 3200);
+      };
+
+      function showCoupon() {
+        document.getElementById('couponImage').style.display = 'block';
+        document.getElementById('couponButton').style.display = 'none';
+      }
+    </script>
+  </body>
+</html>
